@@ -1,0 +1,37 @@
+
+The code uses the `langchain` library to perform simple question-answering using the Hugging Face language model. 
+The script sets the Hugging Face Hub API token and imports the necessary classes from the `langchain` library. 
+It then initializes a Hugging Face model (`flan_t5`) with the Google Flan T5 XL repository and sets a model hyperparameter (`temperature`) to a very small value. 
+A prompt template is built with a question placeholder, and the `LLMChain` object is instantiated with the prompt and the Hugging Face model. 
+Finally, a question is defined and passed to the `run` method of the `LLMChain` object to get the answer, which is printed to the console.
+
+import os
+
+Set Hugging Face Hub API token
+os.environ['HUGGINGFACEHUB_API_TOKEN'] = 'YOUR_API_TOKEN'
+
+from langchain import PromptTemplate, HuggingFaceHub, LLMChain
+
+Initialize a Hugging Face model
+flan_t5 = HuggingFaceHub(
+repo_id="google/flan-t5-xl",
+model_kwargs={"temperature":1e-10}
+)
+
+Build prompt template for simple question-answering
+template = """Question: {question}
+
+Answer: """
+prompt = PromptTemplate(template=template, input_variables=["question"])
+
+Instantiate a LLMChain object using the prompt and the Hugging Face model
+llm_chain = LLMChain(
+prompt=prompt,
+llm=flan_t5
+)
+
+Define the question for which the answer is required
+question = "Who is Wyndham Lewis?"
+
+Use the LLMChain object to run the language model on the question and return the answer
+print(llm_chain.run(question))
