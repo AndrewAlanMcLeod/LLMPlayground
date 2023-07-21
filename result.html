@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeReader Demo - Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="center">
+        <h2>Code Analysis</h2>
+        <div class="result">
+            {{ result|safe }}
+        </div>
+        <a href="/">Analyze another code</a>
+    </div>
+</body>
+</html>
